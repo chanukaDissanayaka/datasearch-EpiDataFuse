@@ -1,5 +1,6 @@
 package io.datasearch.epidatafuse.core.dengdipipeline.fuseengine;
 
+import io.datasearch.epidatafuse.core.dengdipipeline.datastore.PipelineDataStore;
 import io.datasearch.epidatafuse.core.dengdipipeline.models.configmodels.AggregationConfig;
 import io.datasearch.epidatafuse.core.dengdipipeline.models.configmodels.GranularityRelationConfig;
 import io.datasearch.epidatafuse.core.dengdipipeline.models.datamodels.SpatioTemporallyAggregatedCollection;
@@ -28,7 +29,7 @@ public class FuseEngine {
     //granularityRelationMapper
     private GranularityRelationMapper granularityRelationMapper;
 
-    private DataStore dataStore;
+    private PipelineDataStore pipelineDataStore;
 
     private Scheduler scheduler;
 
@@ -39,11 +40,12 @@ public class FuseEngine {
 
     private Timer timer = new Timer();
 
-    public FuseEngine(DataStore dataStore, HashMap<String, GranularityRelationConfig> granularityRelationConfigs,
+    public FuseEngine(PipelineDataStore pipelineDataStore,
+                      HashMap<String, GranularityRelationConfig> granularityRelationConfigs,
                       HashMap<String, AggregationConfig> aggregationConfigs) {
-        this.dataStore = dataStore;
-        this.granularityRelationMapper = new GranularityRelationMapper(this.dataStore);
-        this.granularityConvertor = new GranularityConvertor(this.dataStore);
+        this.pipelineDataStore = pipelineDataStore;
+        this.granularityRelationMapper = new GranularityRelationMapper(this.pipelineDataStore);
+        this.granularityConvertor = new GranularityConvertor(this.pipelineDataStore);
         this.granularityRelationConfigs = granularityRelationConfigs;
         this.aggregationConfigs = aggregationConfigs;
         this.dataFrameBuilder = new DataFrameBuilder();

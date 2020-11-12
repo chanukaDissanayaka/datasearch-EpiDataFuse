@@ -1,5 +1,6 @@
 package io.datasearch.epidatafuse.core.dengdipipeline.fuseengine;
 
+import io.datasearch.epidatafuse.core.dengdipipeline.datastore.PipelineDataStore;
 import io.datasearch.epidatafuse.core.dengdipipeline.datastore.query.QueryManager;
 import io.datasearch.epidatafuse.core.dengdipipeline.models.configmodels.GranularityRelationConfig;
 import io.datasearch.epidatafuse.core.dengdipipeline.models.granularitymappingmethods.ContainMapper;
@@ -25,6 +26,7 @@ import java.util.Map;
  */
 public class GranularityRelationMapper {
 
+    private PipelineDataStore pipelineDataStore;
     private DataStore dataStore;
     private QueryManager queryManager;
     private static final Logger logger = LoggerFactory.getLogger(GranularityRelationMapper.class);
@@ -33,8 +35,9 @@ public class GranularityRelationMapper {
 
     //private SimpleFeatureCollection targetSpatialGranules;
 
-    public GranularityRelationMapper(DataStore dataStore) {
-        this.dataStore = dataStore;
+    public GranularityRelationMapper(PipelineDataStore pipelineDataStore) {
+        this.pipelineDataStore = pipelineDataStore;
+        this.dataStore = pipelineDataStore.getDataStore();
         this.queryManager = new QueryManager();
     }
 
@@ -72,10 +75,6 @@ public class GranularityRelationMapper {
 
     public SimpleFeatureCollection getGranuleSet(String granularityName) {
         try {
-
-//            Query query = new Query(granularityName);
-//            QueryObject queryObj = new QueryObject("dengDIDataStore-test", query, granularityName);
-//           ArrayList<SimpleFeature> featureList = this.queryManager.getFeatures(this.dataStore, queryObj);
 
             Query query = new Query(granularityName);
             FeatureReader<SimpleFeatureType, SimpleFeature> reader =

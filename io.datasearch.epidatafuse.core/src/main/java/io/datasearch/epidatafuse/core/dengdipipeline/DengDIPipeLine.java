@@ -55,7 +55,7 @@ public class DengDIPipeLine {
                           HashMap<String, AggregationConfig> aggregationConfigs) {
         this.pipelineDataStore = new PipelineDataStore(dataStore, schemas);
         this.streamHandler = new StreamHandler(this);
-        this.fuseEngine = new FuseEngine(dataStore, granularityRelationConfigs, aggregationConfigs);
+        this.fuseEngine = new FuseEngine(pipelineDataStore, granularityRelationConfigs, aggregationConfigs);
         this.granularityRelationConfigs = granularityRelationConfigs;
         this.aggregationConfigs = aggregationConfigs;
     }

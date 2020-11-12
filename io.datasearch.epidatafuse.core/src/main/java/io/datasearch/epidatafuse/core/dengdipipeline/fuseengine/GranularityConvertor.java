@@ -1,5 +1,6 @@
 package io.datasearch.epidatafuse.core.dengdipipeline.fuseengine;
 
+import io.datasearch.epidatafuse.core.dengdipipeline.datastore.PipelineDataStore;
 import io.datasearch.epidatafuse.core.dengdipipeline.models.aggregationmethods.AggregateInvoker;
 import io.datasearch.epidatafuse.core.dengdipipeline.models.configmodels.AggregationConfig;
 import io.datasearch.epidatafuse.core.dengdipipeline.models.datamodels.SpatioTemporallyAggregatedCollection;
@@ -40,10 +41,12 @@ import java.util.List;
 public class GranularityConvertor {
     private static final Logger logger = LoggerFactory.getLogger(GranularityConvertor.class);
 
+    private PipelineDataStore pipelineDataStore;
     private DataStore dataStore;
 
-    public GranularityConvertor(DataStore dataStore) {
-        this.dataStore = dataStore;
+    public GranularityConvertor(PipelineDataStore pipelineDataStore) {
+        this.pipelineDataStore = pipelineDataStore;
+        this.dataStore = pipelineDataStore.getDataStore();
     }
 
     public SpatioTemporallyAggregatedCollection aggregate(GranularityMap granularityMap, AggregationConfig config)
